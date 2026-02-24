@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description"
+    content="Silver Bracelet Alloy Calculator — compute silver, copper, and waste alloy weights for any order. Works offline.">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Alloy Calc">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" sizes="192x192" href="icons/icon-192.svg">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <title>Alloy Calculator</title>
+</head>
+
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="13" stroke="url(#lg)" stroke-width="2" />
+            <path d="M9 18L14 8L19 18" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <line x1="10.5" y1="15" x2="17.5" y2="15" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round" />
+            <defs>
+              <linearGradient id="lg" x1="0" y1="0" x2="28" y2="28">
+                <stop stop-color="#c0a36a" />
+                <stop offset="1" stop-color="#e8d5a3" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <h1>Alloy Calculator</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="tabs">
+      <button class="tab active" data-tab="calculator" id="tab-calculator">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="2" />
+          <line x1="8" y1="6" x2="16" y2="6" />
+          <line x1="8" y1="10" x2="10" y2="10" />
+          <line x1="14" y1="10" x2="16" y2="10" />
+          <line x1="8" y1="14" x2="10" y2="14" />
+          <line x1="14" y1="14" x2="16" y2="14" />
+          <line x1="8" y1="18" x2="16" y2="18" />
+        </svg>
+        Calculator
+      </button>
+      <button class="tab" data-tab="history" id="tab-history">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        History
+        <span class="history-badge" id="history-badge" style="display:none;">0</span>
+      </button>
+    </nav>
+
+    <!-- Calculator View -->
+    <main class="view active" id="view-calculator">
+      <form id="calc-form" autocomplete="off">
+        <!-- Order Details -->
+        <section class="card">
+          <h2 class="card-title">Order Details</h2>
+          <div class="field">
+            <label for="total-weight">Total Weight of Order</label>
+            <div class="input-wrap">
+              <input type="number" id="total-weight" placeholder="e.g. 100" step="any" min="0.01" required>
+              <div class="unit-toggle" id="unit-toggle">
+                <button type="button" class="unit-btn active" data-unit="g">g</button>
+                <button type="button" class="unit-btn" data-unit="kg">kg</button>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Desired Silver Purity Range</label>
+            <div class="purity-range-row">
+              <div class="input-wrap">
+                <input type="number" id="silver-pct-min" placeholder="Min e.g. 92" step="any" min="1" max="98.5"
+                  required>
+                <span class="unit">%</span>
+              </div>
+              <span class="range-separator">to</span>
+              <div class="input-wrap">
+                <input type="number" id="silver-pct-max" placeholder="Max e.g. 95" step="any" min="1" max="98.5">
+                <span class="unit">%</span>
+              </div>
+            </div>
+            <span class="field-hint">Result purity will be ≥ min. Max defaults to 98.5% if empty.</span>
+          </div>
+        </section>
+
+        <!-- Waste Section -->
+        <section class="card">
+          <div class="toggle-row">
+            <h2 class="card-title" style="margin-bottom:0">Use Waste Alloy</h2>
+            <label class="switch" for="use-waste">
+              <input type="checkbox" id="use-waste">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="waste-fields" id="waste-fields" style="display:none;">
+            <div class="field">
+              <label for="gross-waste">Waste Weight (with bag)</label>
+              <div class="input-wrap">
+                <input type="number" id="gross-waste" placeholder="e.g. 50" step="any" min="0">
+                <span class="unit weight-unit-label">g</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="bag-weight">Bag Weight</label>
+              <div class="input-wrap">
+                <input type="number" id="bag-weight" placeholder="e.g. 2" step="any" min="0">
+                <span class="unit weight-unit-label">g</span>
+              </div>
+            </div>
+            <div class="field" id="usable-waste-row" style="display:none;">
+              <label>Usable Waste Weight</label>
+              <div class="computed-value" id="usable-waste-display">—</div>
+            </div>
+            <div class="field">
+              <label for="waste-purity">Waste Purity (% silver)</label>
+              <div class="input-wrap">
+                <input type="number" id="waste-purity" placeholder="e.g. 90" step="any" min="1" max="98.5">
+                <span class="unit">%</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Calculate Button -->
+        <button type="submit" class="btn-calculate" id="btn-calculate">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg>
+          Calculate Alloy
+        </button>
+      </form>
+
+      <!-- Results -->
+      <div class="results-container" id="results-container" style="display:none;">
+        <section class="card results-card">
+          <h2 class="card-title">Alloy Composition</h2>
+          <div id="warning-box" class="warning-box" style="display:none;"></div>
+          <div class="result-grid">
+            <div class="result-item silver">
+              <span class="result-label">Silver to Add</span>
+              <span class="result-sublabel">98.50% pure</span>
+              <span class="result-value" id="res-silver">—</span>
+            </div>
+            <div class="result-item copper">
+              <span class="result-label">Fresh Copper to Add</span>
+              <span class="result-sublabel">99% pure</span>
+              <span class="result-value" id="res-copper">—</span>
+            </div>
+            <div class="result-item waste" id="res-waste-item" style="display:none;">
+              <span class="result-label">Waste Alloy Used</span>
+              <span class="result-sublabel" id="res-waste-purity-label">—</span>
+              <span class="result-value" id="res-waste-used">—</span>
+            </div>
+            <div class="result-item waste-copper" id="res-waste-copper-item" style="display:none;">
+              <span class="result-label">Copper from Waste</span>
+              <span class="result-sublabel">contributed by waste</span>
+              <span class="result-value" id="res-copper-waste">—</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card verify-card">
+          <h2 class="card-title">Verification</h2>
+          <div class="verify-grid">
+            <div class="verify-row">
+              <span>Silver from silver material</span>
+              <span id="v-silver">—</span>
+            </div>
+            <div class="verify-row">
+              <span>Silver from copper material</span>
+              <span id="v-copper">—</span>
+            </div>
+            <div class="verify-row" id="v-waste-row" style="display:none;">
+              <span>Silver from waste material</span>
+              <span id="v-waste">—</span>
+            </div>
+            <div class="verify-row total">
+              <span>Total pure silver</span>
+              <span id="v-total">—</span>
+            </div>
+            <div class="verify-row actual">
+              <span>Actual silver %</span>
+              <span id="v-actual-pct">—</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- History View -->
+    <main class="view" id="view-history">
+      <div class="history-header">
+        <h2>Calculation History</h2>
+        <button class="btn-clear-all" id="btn-clear-all" style="display:none;">Clear All</button>
+      </div>
+      <div class="history-list" id="history-list">
+        <div class="empty-state" id="empty-history">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+            stroke-linecap="round" stroke-linejoin="round" opacity="0.3">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <p>No calculations yet</p>
+          <span>Your calculations will appear here</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
