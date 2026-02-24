@@ -161,21 +161,109 @@ textarea {
   color: var(--gold-light);
 }
 
-.history-badge {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: var(--gold);
-  color: var(--bg-primary);
-  font-size: 0.7rem;
+/* ============================================
+   BLOCK ADJUSTMENT
+   ============================================ */
+.block-card {
+  border-color: var(--accent);
+  border-style: dashed;
+}
+
+.block-intro {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.btn-adjust {
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  border: none;
+  border-radius: var(--radius-sm);
+  color: white;
   font-weight: 700;
-  min-width: 20px;
-  height: 20px;
-  border-radius: 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 5px;
+  gap: 10px;
+  transition: all 0.25s var(--ease);
+  margin-top: 8px;
+  letter-spacing: 0.02em;
+}
+
+.btn-adjust:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(74, 111, 165, 0.3);
+}
+
+.btn-adjust:active {
+  transform: translateY(0);
+}
+
+.block-results-card {
+  border-color: var(--accent);
+}
+
+.success-box {
+  padding: 12px 14px;
+  background: rgba(74, 138, 90, 0.15);
+  border: 1px solid var(--success);
+  border-radius: var(--radius-sm);
+  color: #a8d8b0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.step-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  color: var(--bg-primary);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  vertical-align: middle;
+  margin-right: 6px;
+  letter-spacing: 0.04em;
+}
+
+.step3-required-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: rgba(192, 163, 106, 0.1);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+}
+
+.step3-required-label {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.step3-required-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.btn-final {
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  color: var(--bg-primary);
+}
+
+.btn-final:hover {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  box-shadow: 0 6px 24px rgba(192, 163, 106, 0.25);
 }
 
 /* ============================================

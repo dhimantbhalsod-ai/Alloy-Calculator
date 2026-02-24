@@ -1,12 +1,13 @@
-const CACHE_NAME = 'alloy-calc-v1';
+const CACHE_NAME = 'alloy-calc-v2';
 const ASSETS = [
     './',
     './index.html',
     './styles.css',
     './app.js',
     './manifest.json',
-    './icons/icon-192.png',
-    './icons/icon-512.png'
+    './icons/icon-192.svg',
+    './icons/icon-512.svg',
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
 ];
 
 // Install — cache all assets

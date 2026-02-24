@@ -32,6 +32,8 @@
   const resWastePurity = $('res-waste-purity-label');
   const resWasteCopperItem = $('res-waste-copper-item');
   const resCopperWaste = $('res-copper-waste');
+  const resWasteSilverItem = $('res-waste-silver-item');
+  const resSilverWaste = $('res-silver-waste');
 
   const vSilver = $('v-silver');
   const vCopper = $('v-copper');
@@ -42,8 +44,34 @@
 
   const historyList = $('history-list');
   const emptyHistory = $('empty-history');
-  const historyBadge = $('history-badge');
   const btnClearAll = $('btn-clear-all');
+
+  // Block adjustment refs — Step 2 (silver)
+  const step2Section = $('step2-section');
+  const actualSilverIn = $('actual-silver');
+  const idealSilverHint = $('ideal-silver-hint');
+  const btnStep2 = $('btn-step2');
+
+  // Block adjustment refs — Step 3 (copper)
+  const step3Section = $('step3-section');
+  const requiredCopperDisplay = $('required-copper-display');
+  const actualCopperIn = $('actual-copper');
+  const idealCopperHint = $('ideal-copper-hint');
+  const btnStep3 = $('btn-step3');
+
+  // Final result refs
+  const finalResult = $('final-result');
+  const blockWarningBox = $('block-warning-box');
+  const blockSuccessBox = $('block-success-box');
+  const adjSilver = $('adj-silver');
+  const adjCopper = $('adj-copper');
+  const adjWasteItem = $('adj-waste-item');
+  const adjWaste = $('adj-waste');
+  const adjTotalWeight = $('adj-total-weight');
+  const adjWeightDiff = $('adj-weight-diff');
+  const adjActualPct = $('adj-actual-pct');
+  const adjCopperLabel = $('adj-copper-label');
+  const adjCopperSublabel = $('adj-copper-sublabel');
 
   // ─── UNIT TOGGLE STATE ─────────────────────────
   let currentUnit = 'g'; // 'g' or 'kg'
@@ -289,6 +317,28 @@
       totalPureSilver, actualPct
     }, minSilverPct, maxSilverPct);
 
+    // Store last calc state for block adjustment
+    lastCalcState = {
+      totalWeight, minSilverPct, maxSilverPct,
+      idealSilver: result.weightOfSilver,
+      idealCopper: result.freshCopperNeeded,
+      wasteUsed: result.wasteUsed,
+      wastePurity: usingWaste ? wastePurity : 0,
+      usingWaste
+    };
+
+    // Update Step 2 silver hint and pre-fill
+    idealSilverHint.textContent = formatWeight(result.weightOfSilver);
+    if (currentUnit === 'kg') {
+      actualSilverIn.value = (result.weightOfSilver / 1000).toFixed(4).replace(/\.?0+$/, '');
+    } else {
+      actualSilverIn.value = result.weightOfSilver.toFixed(2).replace(/\.?0+$/, '');
+    }
+
+    // Reset: hide Step 3 and final result when a new ideal calc is done
+    step3Section.style.display = 'none';
+    finalResult.style.display = 'none';
+
     // Save to history
     saveToHistory({
       timestamp: Date.now(),
@@ -328,9 +378,12 @@
       resWastePurity.textContent = wastePurity.toFixed(2) + '% purity';
       resWasteCopperItem.style.display = 'flex';
       resCopperWaste.textContent = formatWeight(result.copperFromWaste);
+      resWasteSilverItem.style.display = 'flex';
+      resSilverWaste.textContent = formatWeight(verification.pureSilverFromWaste);
     } else {
       resWasteItem.style.display = 'none';
       resWasteCopperItem.style.display = 'none';
+      resWasteSilverItem.style.display = 'none';
     }
 
     // Verification
@@ -358,6 +411,159 @@
     resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  // ─── BLOCK ADJUSTMENT STATE ───────────────────
+  let lastCalcState = null;
+
+  // ─── STEP 2: Silver entered → Calculate required copper ───
+  btnStep2.addEventListener('click', () => {
+    if (!lastCalcState) {
+      return showError('Run the ideal calculation first');
+    }
+
+    const actualSilverRaw = parseFloat(actualSilverIn.value);
+    if (isNaN(actualSilverRaw) || actualSilverRaw <= 0) {
+      return showError('Enter a valid actual silver weight');
+    }
+
+    const actualSilver = toGrams(actualSilverRaw);
+    const { wasteUsed, wastePurity, maxSilverPct } = lastCalcState;
+    const silverPurity = 0.985;
+    const copperSilverContent = 0.01;
+
+    // Pure silver already contributed by silver blocks + waste
+    const pureSilverFromSilver = actualSilver * silverPurity;
+    const pureSilverFromWaste = wasteUsed * (wastePurity / 100);
+    const silverAlready = pureSilverFromSilver + pureSilverFromWaste;
+
+    // Solve for required copper to hit max target purity
+    // targetPct/100 = (silverAlready + copper * 0.01) / (actualSilver + wasteUsed + copper)
+    const targetDecimal = maxSilverPct / 100;
+    let requiredCopper = (silverAlready - targetDecimal * (actualSilver + wasteUsed)) / (targetDecimal - copperSilverContent);
+    requiredCopper = Math.max(requiredCopper, 0);
+
+    // Store actual silver in state for Step 3
+    lastCalcState.actualSilver = actualSilver;
+    lastCalcState.requiredCopper = requiredCopper;
+
+    // Show Step 3 with required copper prominently displayed
+    const requiredCopperFormatted = formatWeight(requiredCopper);
+    requiredCopperDisplay.textContent = requiredCopperFormatted;
+    idealCopperHint.textContent = requiredCopperFormatted;
+
+    // Pre-fill copper input with required value
+    if (currentUnit === 'kg') {
+      actualCopperIn.value = (requiredCopper / 1000).toFixed(4).replace(/\.?0+$/, '');
+    } else {
+      actualCopperIn.value = requiredCopper.toFixed(2).replace(/\.?0+$/, '');
+    }
+
+    // Show Step 3, hide final result
+    step3Section.style.display = 'block';
+    finalResult.style.display = 'none';
+    step3Section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // ─── STEP 3: Copper entered → Calculate final result (auto-adjust if needed) ───
+  btnStep3.addEventListener('click', () => {
+    if (!lastCalcState || !lastCalcState.actualSilver) {
+      return showError('Complete Step 2 first');
+    }
+
+    const actualCopperRaw = parseFloat(actualCopperIn.value);
+    if (isNaN(actualCopperRaw) || actualCopperRaw < 0) {
+      return showError('Enter a valid actual copper weight');
+    }
+
+    let actualCopper = toGrams(actualCopperRaw);
+    const { actualSilver, wasteUsed, wastePurity, minSilverPct, maxSilverPct, totalWeight, usingWaste, requiredCopper } = lastCalcState;
+
+    const silverPurity = 0.985;
+    const copperSilverContent = 0.01;
+
+    // Compute purity with user's copper
+    const pureSilverFromSilver = actualSilver * silverPurity;
+    const pureSilverFromWaste = wasteUsed * (wastePurity / 100);
+    const silverAlready = pureSilverFromSilver + pureSilverFromWaste;
+
+    let userCopper = actualCopper;
+    let pureSilverFromCopper = actualCopper * copperSilverContent;
+    let totalPureSilver = silverAlready + pureSilverFromCopper;
+    let newTotalWeight = actualSilver + actualCopper + wasteUsed;
+    let actualPct = newTotalWeight > 0 ? (totalPureSilver / newTotalWeight) * 100 : 0;
+    let inRange = actualPct >= minSilverPct - 0.01 && actualPct <= maxSilverPct + 0.01;
+
+    let wasAdjusted = false;
+    let adjustedCopper = actualCopper;
+
+    // If out of range, auto-adjust copper to bring purity to max or min edge
+    if (!inRange) {
+      wasAdjusted = true;
+      let targetPct;
+      if (actualPct > maxSilverPct + 0.01) {
+        // Purity too high → need MORE copper to bring it down to max
+        targetPct = maxSilverPct;
+      } else {
+        // Purity too low → need LESS copper to bring it up to min
+        targetPct = minSilverPct;
+      }
+      const targetDecimal = targetPct / 100;
+      adjustedCopper = (silverAlready - targetDecimal * (actualSilver + wasteUsed)) / (targetDecimal - copperSilverContent);
+      adjustedCopper = Math.max(adjustedCopper, 0);
+
+      // Recalculate with adjusted copper
+      pureSilverFromCopper = adjustedCopper * copperSilverContent;
+      totalPureSilver = silverAlready + pureSilverFromCopper;
+      newTotalWeight = actualSilver + adjustedCopper + wasteUsed;
+      actualPct = newTotalWeight > 0 ? (totalPureSilver / newTotalWeight) * 100 : 0;
+      inRange = true; // We forced it into range
+    }
+
+    const weightDiff = newTotalWeight - totalWeight;
+
+    // Display final result
+    adjSilver.textContent = formatWeight(actualSilver);
+    adjCopper.textContent = formatWeight(adjustedCopper);
+
+    // Update copper label based on whether it was auto-adjusted
+    if (wasAdjusted) {
+      adjCopperLabel.textContent = 'Copper (adjusted)';
+      adjCopperSublabel.textContent = 'auto-corrected for purity';
+    } else {
+      adjCopperLabel.textContent = 'Copper (actual)';
+      adjCopperSublabel.textContent = 'from your blocks';
+    }
+
+    if (usingWaste && wasteUsed > 0) {
+      adjWasteItem.style.display = 'flex';
+      adjWaste.textContent = formatWeight(wasteUsed);
+    } else {
+      adjWasteItem.style.display = 'none';
+    }
+
+    adjTotalWeight.textContent = formatWeight(newTotalWeight);
+    if (weightDiff >= 0) {
+      adjWeightDiff.textContent = '+' + formatWeight(weightDiff);
+    } else {
+      adjWeightDiff.textContent = '−' + formatWeight(Math.abs(weightDiff));
+    }
+    adjActualPct.textContent = actualPct.toFixed(2) + '%';
+    adjActualPct.style.color = '';
+
+    // Messages
+    if (wasAdjusted) {
+      blockWarningBox.style.display = 'none';
+      blockSuccessBox.textContent = `✓ Your copper (${formatWeight(userCopper)}) was adjusted to ${formatWeight(adjustedCopper)} to keep purity at ${actualPct.toFixed(2)}% (within ${minSilverPct}% – ${maxSilverPct}% range).`;
+      blockSuccessBox.style.display = 'block';
+    } else {
+      blockWarningBox.style.display = 'none';
+      blockSuccessBox.textContent = `✓ Purity ${actualPct.toFixed(2)}% is within your desired range (${minSilverPct}% – ${maxSilverPct}%). Good to go!`;
+      blockSuccessBox.style.display = 'block';
+    }
+
+    finalResult.style.display = 'block';
+    finalResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
   // ─── HISTORY (localStorage) ────────────────────
   const STORAGE_KEY = 'alloy_calc_history';
 
@@ -374,7 +580,7 @@
     history.unshift(entry); // newest first
     if (history.length > 200) history.length = 200; // cap
     localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-    updateBadge(history.length);
+
   }
 
   function deleteHistoryEntry(index) {
@@ -391,14 +597,7 @@
     }
   }
 
-  function updateBadge(count) {
-    if (count > 0) {
-      historyBadge.textContent = count;
-      historyBadge.style.display = 'flex';
-    } else {
-      historyBadge.style.display = 'none';
-    }
-  }
+
 
   function formatDate(ts) {
     const d = new Date(ts);
@@ -412,7 +611,7 @@
 
   function renderHistory() {
     const history = getHistory();
-    updateBadge(history.length);
+
 
     // Clear the list but preserve the empty state element
     historyList.innerHTML = '';

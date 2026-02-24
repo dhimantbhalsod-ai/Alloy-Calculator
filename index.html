@@ -65,7 +65,6 @@
           <polyline points="12 6 12 12 16 14" />
         </svg>
         History
-        <span class="history-badge" id="history-badge" style="display:none;">0</span>
       </button>
     </nav>
 
@@ -158,9 +157,14 @@
           <div id="warning-box" class="warning-box" style="display:none;"></div>
           <div class="result-grid">
             <div class="result-item silver">
-              <span class="result-label">Silver to Add</span>
+              <span class="result-label">Fresh Silver to Add</span>
               <span class="result-sublabel">98.50% pure</span>
               <span class="result-value" id="res-silver">—</span>
+            </div>
+            <div class="result-item silver" id="res-waste-silver-item" style="display:none;">
+              <span class="result-label">Silver from Waste</span>
+              <span class="result-sublabel">contributed by waste</span>
+              <span class="result-value" id="res-silver-waste">—</span>
             </div>
             <div class="result-item copper">
               <span class="result-label">Fresh Copper to Add</span>
@@ -202,6 +206,95 @@
             <div class="verify-row actual">
               <span>Actual silver %</span>
               <span id="v-actual-pct">—</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 2: Adjust Silver -->
+        <section class="card block-card" id="step2-section">
+          <h2 class="card-title">
+            <span class="step-badge">Step 2</span> Adjust Silver Weight
+          </h2>
+          <p class="block-intro">Your silver comes in blocks that can't be cut. Enter the nearest weight you can manage
+            from your available silver blocks.</p>
+          <div class="field">
+            <label for="actual-silver">Actual Silver Weight</label>
+            <div class="input-wrap">
+              <input type="number" id="actual-silver" placeholder="Nearest silver weight" step="any" min="0">
+              <span class="unit weight-unit-label">g</span>
+            </div>
+            <span class="field-hint">Ideal: <strong id="ideal-silver-hint">—</strong></span>
+          </div>
+          <button type="button" class="btn-adjust" id="btn-step2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+            Calculate Required Copper
+          </button>
+        </section>
+
+        <!-- STEP 3: Adjust Copper -->
+        <section class="card block-card" id="step3-section" style="display:none;">
+          <h2 class="card-title">
+            <span class="step-badge">Step 3</span> Adjust Copper Weight
+          </h2>
+          <div class="step3-required-box" id="step3-required-box">
+            <span class="step3-required-label">Required copper for target purity:</span>
+            <span class="step3-required-value" id="required-copper-display">—</span>
+          </div>
+          <p class="block-intro">Enter the nearest copper weight you can manage from your available copper blocks.</p>
+          <div class="field">
+            <label for="actual-copper">Actual Copper Weight</label>
+            <div class="input-wrap">
+              <input type="number" id="actual-copper" placeholder="Nearest copper weight" step="any" min="0">
+              <span class="unit weight-unit-label">g</span>
+            </div>
+            <span class="field-hint">Required: <strong id="ideal-copper-hint">—</strong></span>
+          </div>
+          <button type="button" class="btn-adjust btn-final" id="btn-step3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+            Calculate Final Result
+          </button>
+        </section>
+
+        <!-- Final Adjusted Result -->
+        <section class="card block-results-card" id="final-result" style="display:none;">
+          <h2 class="card-title">Final Adjusted Result</h2>
+          <div id="block-warning-box" class="warning-box" style="display:none;"></div>
+          <div id="block-success-box" class="success-box" style="display:none;"></div>
+          <div class="result-grid">
+            <div class="result-item silver">
+              <span class="result-label">Silver (actual)</span>
+              <span class="result-sublabel">from your blocks</span>
+              <span class="result-value" id="adj-silver">—</span>
+            </div>
+            <div class="result-item copper">
+              <span class="result-label" id="adj-copper-label">Copper (adjusted)</span>
+              <span class="result-sublabel" id="adj-copper-sublabel">auto-corrected for purity</span>
+              <span class="result-value" id="adj-copper">—</span>
+            </div>
+            <div class="result-item waste" id="adj-waste-item" style="display:none;">
+              <span class="result-label">Waste Used</span>
+              <span class="result-sublabel">full quantity</span>
+              <span class="result-value" id="adj-waste">—</span>
+            </div>
+          </div>
+          <div class="verify-grid" style="margin-top:16px;">
+            <div class="verify-row">
+              <span>Adjusted total weight</span>
+              <span id="adj-total-weight">—</span>
+            </div>
+            <div class="verify-row">
+              <span>Weight difference</span>
+              <span id="adj-weight-diff">—</span>
+            </div>
+            <div class="verify-row actual">
+              <span>Actual silver %</span>
+              <span id="adj-actual-pct">—</span>
             </div>
           </div>
         </section>
