@@ -874,6 +874,62 @@ input[type="number"] {
 }
 
 /* ============================================
+   WASTE ENTRY CARDS
+   ============================================ */
+.waste-entry {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 12px;
+  animation: fadeIn 0.3s var(--ease);
+}
+
+.waste-entry-header {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--waste-color);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* ============================================
+   METAL PURITY EXPAND TOGGLE
+   ============================================ */
+.btn-expand-toggle {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s var(--ease);
+}
+
+.btn-expand-toggle:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+}
+
+.btn-expand-toggle.expanded svg {
+  transform: rotate(180deg);
+}
+
+.btn-expand-toggle svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.metal-purity-fields {
+  margin-top: 14px;
+  animation: slideDown 0.3s var(--ease);
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 400px) {
