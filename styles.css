@@ -41,6 +41,52 @@
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ── Color Accent Dots ── */
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.dot-silver {
+  background: var(--silver-color);
+}
+
+.dot-copper {
+  background: var(--copper-color);
+}
+
+.dot-waste {
+  background: var(--waste-color);
+}
+
+.dot-gold {
+  background: var(--gold);
+}
+
+.dot-silver-sm,
+.dot-copper-sm {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.dot-silver-sm {
+  background: var(--silver-color);
+}
+
+.dot-copper-sm {
+  background: var(--copper-color);
+}
+
+
 /* Reset */
 *,
 *::before,
@@ -692,14 +738,14 @@ input[type="number"] {
   margin-top: 4px;
 }
 
-/* History Card */
+/* History Card — Compact / Expandable */
 .history-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 12px;
-  transition: all 0.25s var(--ease);
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.25s var(--ease);
   animation: fadeIn 0.3s var(--ease);
 }
 
@@ -707,81 +753,186 @@ input[type="number"] {
   border-color: var(--border-accent);
 }
 
-.history-card-header {
+/* ── Compact (collapsed) row ── */
+.hist-compact {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  cursor: pointer;
+  gap: 8px;
+  user-select: none;
+  transition: background 0.2s var(--ease);
+}
+
+.hist-compact:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.hist-compact-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.hist-compact-weight {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.hist-compact-metals {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.hist-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.02em;
+}
+
+.hist-chip.silver-chip {
+  background: rgba(192, 192, 208, 0.12);
+  color: var(--silver-color);
+  border: 1px solid rgba(192, 192, 208, 0.2);
+}
+
+.hist-chip.copper-chip {
+  background: rgba(212, 149, 106, 0.12);
+  color: var(--copper-color);
+  border: 1px solid rgba(212, 149, 106, 0.2);
+}
+
+.hist-compact-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.hist-compact-purity {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.hist-compact-date {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.hist-chevron {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform 0.3s var(--ease);
+}
+
+.hist-chevron-open {
+  transform: rotate(180deg);
+}
+
+/* ── Expanded details ── */
+.hist-expanded {
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border-color);
+  animation: slideDown 0.3s var(--ease);
+}
+
+.hist-section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-top: 12px;
+  margin-bottom: 6px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(42, 42, 74, 0.3);
+}
+
+.hist-detail-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 12px;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 0.8rem;
 }
 
-.history-date {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  font-weight: 500;
+.hist-detail-row.hist-sub {
+  padding-left: 12px;
+  opacity: 0.75;
 }
 
-.history-order-info {
-  font-size: 0.95rem;
+.hist-label {
+  color: var(--text-secondary);
+}
+
+.hist-value {
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.btn-delete-history {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s var(--ease);
-  display: flex;
-  align-items: center;
-}
-
-.btn-delete-history:hover {
-  color: var(--danger);
-  background: rgba(192, 83, 79, 0.1);
-}
-
-.history-details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.history-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.history-detail-label {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.history-detail-value {
-  font-size: 0.88rem;
-  font-weight: 600;
-}
-
-.history-detail-value.silver-val {
+.hist-value.silver-val {
   color: var(--silver-color);
 }
 
-.history-detail-value.copper-val {
+.hist-value.copper-val {
   color: var(--copper-color);
 }
 
-.history-detail-value.waste-val {
+.hist-value.waste-val {
   color: var(--waste-color);
 }
 
-.history-detail-value.pct-val {
+.hist-detail-row.hist-total {
+  border-top: 1px solid var(--border-accent);
+  margin-top: 4px;
+  padding-top: 6px;
+}
+
+.hist-detail-row.hist-total .hist-value {
   color: var(--gold-light);
 }
+
+.hist-detail-row.hist-purity-final {
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-accent);
+}
+
+.hist-detail-row.hist-purity-final .hist-value {
+  color: var(--success);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.btn-delete-history {
+  margin-top: 12px;
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  border: 1px solid rgba(192, 83, 79, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--danger);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s var(--ease);
+}
+
+.btn-delete-history:hover {
+  background: rgba(192, 83, 79, 0.1);
+  border-color: var(--danger);
+}
+
 
 /* ============================================
    ERROR TOAST

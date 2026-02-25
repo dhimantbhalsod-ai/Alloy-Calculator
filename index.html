@@ -73,7 +73,10 @@
       <form id="calc-form" autocomplete="off">
         <!-- Order Details -->
         <section class="card">
-          <h2 class="card-title">Order Details</h2>
+          <h2 class="card-title">
+            <span class="dot dot-gold"></span>
+            Order Details
+          </h2>
           <div class="field">
             <label for="total-weight">Total Weight of Order</label>
             <div class="input-wrap">
@@ -105,7 +108,10 @@
         <!-- Fresh Metal Purities -->
         <section class="card">
           <div class="toggle-row">
-            <h2 class="card-title" style="margin-bottom:0">Fresh Metal Purities</h2>
+            <h2 class="card-title" style="margin-bottom:0">
+              <span class="dot dot-silver"></span>
+              Fresh Metal Purities
+            </h2>
             <button type="button" class="btn-expand-toggle" id="btn-metal-purity-toggle">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -116,7 +122,10 @@
           <span class="field-hint" style="margin-top:4px;">Defaults: Silver 98.50%, Copper 99%. Tap to customize.</span>
           <div class="metal-purity-fields" id="metal-purity-fields" style="display:none;">
             <div class="field">
-              <label for="silver-metal-purity">Silver Metal Purity</label>
+              <label for="silver-metal-purity">
+                <span class="dot dot-silver-sm"></span>
+                Silver Metal Purity
+              </label>
               <div class="input-wrap">
                 <input type="number" id="silver-metal-purity" placeholder="98.50" step="any" min="1" max="100">
                 <span class="unit">%</span>
@@ -124,7 +133,10 @@
               <span class="field-hint">Leave empty for default 98.50%</span>
             </div>
             <div class="field">
-              <label for="copper-metal-purity">Copper Metal Purity</label>
+              <label for="copper-metal-purity">
+                <span class="dot dot-copper-sm"></span>
+                Copper Metal Purity
+              </label>
               <div class="input-wrap">
                 <input type="number" id="copper-metal-purity" placeholder="99" step="any" min="1" max="100">
                 <span class="unit">%</span>
@@ -137,7 +149,10 @@
         <!-- Waste Section -->
         <section class="card">
           <div class="toggle-row">
-            <h2 class="card-title" style="margin-bottom:0">Use Waste Alloy</h2>
+            <h2 class="card-title" style="margin-bottom:0">
+              <span class="dot dot-waste"></span>
+              Use Waste Alloy
+            </h2>
             <label class="switch" for="use-waste">
               <input type="checkbox" id="use-waste">
               <span class="slider"></span>
@@ -232,8 +247,9 @@
           <h2 class="card-title">
             <span class="step-badge">Step 2</span> Adjust Silver Weight
           </h2>
-          <p class="block-intro">Your silver comes in blocks that can't be cut. Enter the nearest weight you can manage
-            from your available silver blocks.</p>
+          <p class="block-intro">Your silver comes in pieces that can't always be cut precisely. Enter the nearest
+            weight you can manage
+            from your available silver metal.</p>
           <div class="field">
             <label for="actual-silver">Actual Silver Weight</label>
             <div class="input-wrap">
@@ -283,7 +299,7 @@
             <span class="step3-required-label">Required copper for target purity:</span>
             <span class="step3-required-value" id="required-copper-display">—</span>
           </div>
-          <p class="block-intro">Enter the nearest copper weight you can manage from your available copper blocks.</p>
+          <p class="block-intro">Enter the nearest copper weight you can manage from your available copper metal.</p>
           <div class="field">
             <label for="actual-copper">Actual Copper Weight</label>
             <div class="input-wrap">
@@ -336,7 +352,7 @@
           <div class="result-grid">
             <div class="result-item silver">
               <span class="result-label">Silver (actual)</span>
-              <span class="result-sublabel">from your blocks</span>
+              <span class="result-sublabel">your silver metal</span>
               <span class="result-value" id="adj-silver">—</span>
             </div>
             <div class="result-item copper">
