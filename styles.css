@@ -19,9 +19,14 @@
   --gold-light: #e8d5a3;
   --gold-dim: #8a7a4a;
 
-  --silver-color: #c0c0d0;
-  --copper-color: #d4956a;
+  --silver-color: #c0c0c0;
+  --silver-light: #d8d8d8;
+  --silver-dim: #8a8a8a;
+  --copper-color: #c76b32;
+  --copper-light: #e0935a;
+  --copper-dim: #8a4a1e;
   --waste-color: #7a9a6a;
+  --waste-light: #a0c890;
 
   --accent: #4a6fa5;
   --accent-light: #6a8fc5;
@@ -31,6 +36,7 @@
   --warning-text: #e8d090;
 
   --success: #4a8a5a;
+  --success-light: #6ab87a;
 
   /* Sizing */
   --radius: 12px;
@@ -54,18 +60,22 @@
 
 .dot-silver {
   background: var(--silver-color);
+  box-shadow: 0 0 6px rgba(192, 192, 192, 0.4);
 }
 
 .dot-copper {
   background: var(--copper-color);
+  box-shadow: 0 0 6px rgba(199, 107, 50, 0.5);
 }
 
 .dot-waste {
   background: var(--waste-color);
+  box-shadow: 0 0 6px rgba(122, 154, 106, 0.4);
 }
 
 .dot-gold {
-  background: var(--gold);
+  background: var(--accent-light);
+  box-shadow: 0 0 6px rgba(106, 143, 197, 0.4);
 }
 
 .dot-silver-sm,
@@ -80,10 +90,12 @@
 
 .dot-silver-sm {
   background: var(--silver-color);
+  box-shadow: 0 0 4px rgba(192, 192, 192, 0.3);
 }
 
 .dot-copper-sm {
   background: var(--copper-color);
+  box-shadow: 0 0 4px rgba(199, 107, 50, 0.4);
 }
 
 
@@ -135,10 +147,8 @@ textarea {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: linear-gradient(180deg, var(--bg-primary) 60%, transparent);
+  background: var(--bg-primary);
   padding: 16px 20px 8px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 .header-inner {
@@ -156,7 +166,7 @@ textarea {
 .logo h1 {
   font-size: 1.15rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  background: linear-gradient(135deg, var(--silver-color), var(--copper-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -203,16 +213,20 @@ textarea {
 
 .tab.active {
   background: var(--bg-card);
-  border-color: var(--gold-dim);
-  color: var(--gold-light);
+  border-color: var(--silver-dim);
+  color: var(--text-primary);
 }
 
 /* ============================================
    BLOCK ADJUSTMENT
    ============================================ */
 .block-card {
-  border-color: var(--accent);
+  border-color: var(--silver-dim);
   border-style: dashed;
+}
+
+.block-card.copper-card {
+  border-color: var(--copper-dim);
 }
 
 .block-intro {
@@ -225,10 +239,10 @@ textarea {
 .btn-adjust {
   width: 100%;
   padding: 12px 20px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  background: linear-gradient(135deg, var(--silver-dim), var(--silver-color));
   border: none;
   border-radius: var(--radius-sm);
-  color: white;
+  color: var(--bg-primary);
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
@@ -243,7 +257,7 @@ textarea {
 
 .btn-adjust:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(74, 111, 165, 0.3);
+  box-shadow: 0 6px 24px rgba(192, 192, 192, 0.3);
 }
 
 .btn-adjust:active {
@@ -268,7 +282,7 @@ textarea {
 
 .step-badge {
   display: inline-block;
-  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  background: linear-gradient(135deg, var(--silver-dim), var(--silver-color));
   color: var(--bg-primary);
   font-size: 0.65rem;
   font-weight: 700;
@@ -279,13 +293,21 @@ textarea {
   letter-spacing: 0.04em;
 }
 
+.step-badge.silver-badge {
+  background: linear-gradient(135deg, var(--silver-dim), var(--silver-color));
+}
+
+.step-badge.copper-badge {
+  background: linear-gradient(135deg, var(--copper-dim), var(--copper-color));
+}
+
 .step3-required-box {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 14px 16px;
-  background: rgba(192, 163, 106, 0.1);
-  border: 1px solid var(--gold-dim);
+  background: rgba(199, 107, 50, 0.1);
+  border: 1px solid var(--copper-dim);
   border-radius: var(--radius-sm);
   margin-bottom: 16px;
 }
@@ -299,17 +321,17 @@ textarea {
 .step3-required-value {
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--gold-light);
+  color: var(--copper-light);
 }
 
 .btn-final {
-  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
-  color: var(--bg-primary);
+  background: linear-gradient(135deg, var(--copper-dim), var(--copper-color));
+  color: white;
 }
 
 .btn-final:hover {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  box-shadow: 0 6px 24px rgba(192, 163, 106, 0.25);
+  background: linear-gradient(135deg, var(--copper-color), var(--copper-light));
+  box-shadow: 0 6px 24px rgba(199, 107, 50, 0.3);
 }
 
 /* ============================================
@@ -387,7 +409,7 @@ textarea {
 }
 
 .input-wrap:focus-within {
-  border-color: var(--gold-dim);
+  border-color: var(--silver-dim);
 }
 
 .input-wrap input {
@@ -425,7 +447,7 @@ textarea {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
-  color: var(--gold-light);
+  color: var(--text-primary);
   font-weight: 600;
   font-size: 0.95rem;
 }
@@ -486,12 +508,12 @@ input[type="number"] {
 }
 
 .switch input:checked+.slider {
-  background: var(--gold-dim);
+  background: var(--waste-color);
 }
 
 .switch input:checked+.slider::before {
   transform: translateX(22px);
-  background: var(--gold-light);
+  background: var(--waste-light);
 }
 
 .waste-fields {
@@ -517,7 +539,7 @@ input[type="number"] {
 .btn-calculate {
   width: 100%;
   padding: 14px 24px;
-  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  background: linear-gradient(135deg, var(--silver-dim), var(--silver-color), var(--copper-color));
   border: none;
   border-radius: var(--radius-sm);
   color: var(--bg-primary);
@@ -534,9 +556,9 @@ input[type="number"] {
 }
 
 .btn-calculate:hover {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  background: linear-gradient(135deg, var(--silver-color), var(--copper-light));
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(192, 163, 106, 0.25);
+  box-shadow: 0 6px 24px rgba(192, 192, 192, 0.2);
 }
 
 .btn-calculate:active {
@@ -563,7 +585,7 @@ input[type="number"] {
 }
 
 .results-card {
-  border-color: var(--gold-dim);
+  border-color: var(--silver-dim);
 }
 
 .warning-box {
@@ -585,12 +607,15 @@ input[type="number"] {
 
 .result-item {
   padding: 14px;
+  padding-left: 16px;
   border-radius: var(--radius-sm);
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
+  border-left: 3px solid var(--border-color);
   display: flex;
   flex-direction: column;
   gap: 2px;
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
 }
 
 .result-label {
@@ -610,16 +635,36 @@ input[type="number"] {
   margin-top: 6px;
 }
 
+.result-item.silver {
+  border-left-color: var(--silver-color);
+  background: rgba(192, 192, 192, 0.06);
+}
+
 .result-item.silver .result-value {
   color: var(--silver-color);
+}
+
+.result-item.copper {
+  border-left-color: var(--copper-color);
+  background: rgba(199, 107, 50, 0.08);
 }
 
 .result-item.copper .result-value {
   color: var(--copper-color);
 }
 
+.result-item.waste {
+  border-left-color: var(--waste-color);
+  background: rgba(122, 154, 106, 0.06);
+}
+
 .result-item.waste .result-value {
   color: var(--waste-color);
+}
+
+.result-item.waste-copper {
+  border-left-color: var(--copper-color);
+  background: rgba(199, 107, 50, 0.06);
 }
 
 .result-item.waste-copper .result-value {
@@ -668,7 +713,7 @@ input[type="number"] {
 }
 
 .verify-row.total span:last-child {
-  color: var(--gold-light);
+  color: var(--silver-light);
   font-size: 0.95rem;
 }
 
@@ -797,15 +842,15 @@ input[type="number"] {
 }
 
 .hist-chip.silver-chip {
-  background: rgba(192, 192, 208, 0.12);
+  background: rgba(192, 192, 192, 0.12);
   color: var(--silver-color);
-  border: 1px solid rgba(192, 192, 208, 0.2);
+  border: 1px solid rgba(192, 192, 192, 0.2);
 }
 
 .hist-chip.copper-chip {
-  background: rgba(212, 149, 106, 0.12);
+  background: rgba(199, 107, 50, 0.15);
   color: var(--copper-color);
-  border: 1px solid rgba(212, 149, 106, 0.2);
+  border: 1px solid rgba(199, 107, 50, 0.25);
 }
 
 .hist-compact-right {
@@ -816,7 +861,7 @@ input[type="number"] {
 .hist-compact-purity {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--gold-light);
+  color: var(--silver-light);
 }
 
 .hist-compact-date {
@@ -895,7 +940,7 @@ input[type="number"] {
 }
 
 .hist-detail-row.hist-total .hist-value {
-  color: var(--gold-light);
+  color: var(--silver-light);
 }
 
 .hist-detail-row.hist-purity-final {
@@ -987,8 +1032,8 @@ input[type="number"] {
 }
 
 .unit-btn.active {
-  color: var(--gold-light);
-  background: rgba(192, 163, 106, 0.12);
+  color: var(--silver-light);
+  background: rgba(192, 192, 192, 0.12);
 }
 
 .unit-btn:hover:not(.active) {

@@ -33,8 +33,8 @@
             <line x1="10.5" y1="15" x2="17.5" y2="15" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round" />
             <defs>
               <linearGradient id="lg" x1="0" y1="0" x2="28" y2="28">
-                <stop stop-color="#c0a36a" />
-                <stop offset="1" stop-color="#e8d5a3" />
+                <stop stop-color="#c0c0c0" />
+                <stop offset="1" stop-color="#c76b32" />
               </linearGradient>
             </defs>
           </svg>
@@ -203,15 +203,15 @@
               <span class="result-sublabel" id="res-copper-purity-label">99% pure</span>
               <span class="result-value" id="res-copper">—</span>
             </div>
-            <div class="result-item waste" id="res-waste-item" style="display:none;">
-              <span class="result-label">Waste Alloy Used</span>
-              <span class="result-sublabel" id="res-waste-purity-label">—</span>
-              <span class="result-value" id="res-waste-used">—</span>
-            </div>
             <div class="result-item waste-copper" id="res-waste-copper-item" style="display:none;">
               <span class="result-label">Copper from Waste</span>
               <span class="result-sublabel">contributed by waste</span>
               <span class="result-value" id="res-copper-waste">—</span>
+            </div>
+            <div class="result-item waste" id="res-waste-item" style="display:none;">
+              <span class="result-label">Waste Alloy Used</span>
+              <span class="result-sublabel" id="res-waste-purity-label">—</span>
+              <span class="result-value" id="res-waste-used">—</span>
             </div>
           </div>
         </section>
@@ -245,7 +245,7 @@
         <!-- STEP 2: Adjust Silver -->
         <section class="card block-card" id="step2-section">
           <h2 class="card-title">
-            <span class="step-badge">Step 2</span> Adjust Silver Weight
+            <span class="step-badge silver-badge">Step 2</span> Adjust Silver Weight
           </h2>
           <p class="block-intro">Your silver comes in pieces that can't always be cut precisely. Enter the nearest
             weight you can manage
@@ -291,9 +291,9 @@
         </section>
 
         <!-- STEP 3: Adjust Copper -->
-        <section class="card block-card" id="step3-section" style="display:none;">
+        <section class="card block-card copper-card" id="step3-section" style="display:none;">
           <h2 class="card-title">
-            <span class="step-badge">Step 3</span> Adjust Copper Weight
+            <span class="step-badge copper-badge">Step 3</span> Adjust Copper Weight
           </h2>
           <div class="step3-required-box" id="step3-required-box">
             <span class="step3-required-label">Required copper for target purity:</span>
