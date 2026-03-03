@@ -866,6 +866,78 @@
 
   btnClearAll.addEventListener('click', clearAllHistory);
 
+  // ─── THEME TOGGLE (Dark / Light) ──────────────
+  const THEME_KEY = 'alloy_calc_theme';
+  const themeToggle = $('theme-toggle');
+  const htmlEl = document.documentElement;
+
+  function setTheme(theme, animate = true) {
+    if (!animate) {
+      document.body.classList.add('no-transition');
+    }
+    htmlEl.setAttribute('data-theme', theme);
+    localStorage.setItem(THEME_KEY, theme);
+
+    // Update PWA theme-color meta tag
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) {
+      metaTheme.setAttribute('content', theme === 'light' ? '#f0f0f5' : '#1a1a2e');
+    }
+
+    if (!animate) {
+      // Force reflow then remove no-transition
+      void document.body.offsetHeight;
+      document.body.classList.remove('no-transition');
+    }
+  }
+
+  // Restore saved theme on load (no animation)
+  const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+  if (savedTheme === 'light') {
+    setTheme('light', false);
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = htmlEl.getAttribute('data-theme') || 'dark';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    // Trigger burst animation
+    themeToggle.classList.remove('burst');
+    void themeToggle.offsetWidth; // force reflow
+    themeToggle.classList.add('burst');
+
+    setTheme(newTheme, true);
+
+    // Remove burst class after animation completes
+    setTimeout(() => themeToggle.classList.remove('burst'), 500);
+  });
+
+  // ─── DYNAMIC BUTTON GRADIENT ──────────────────
+  // Button gradient reflects silver % — silver side = purity%, copper side = rest
+  const btnCalc = $('btn-calculate');
+
+  function updateButtonGradient() {
+    const val = parseFloat(silverPctMinIn.value);
+    const pct = (!isNaN(val) && val >= 1 && val <= 98.5) ? val : 50;
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    // Smooth blend: silver ends 10% before split, copper starts 10% after
+    const s = Math.max(pct - 10, 0);
+    const c = Math.min(pct + 10, 100);
+
+    if (isLight) {
+      btnCalc.style.background = `linear-gradient(to right, #a8a8b0 0%, #9a9aa0 ${s}%, #b86838 ${c}%, #985020 100%)`;
+    } else {
+      btnCalc.style.background = `linear-gradient(to right, #c0c0c8 0%, #b8b8c0 ${s}%, #c07040 ${c}%, #a85828 100%)`;
+    }
+  }
+
+  silverPctMinIn.addEventListener('input', updateButtonGradient);
+
+  // Also update on theme change
+  const origSetTheme = window.__setThemeForGradient;
+  const observer = new MutationObserver(() => updateButtonGradient());
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
   // ─── SERVICE WORKER ────────────────────────────
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {

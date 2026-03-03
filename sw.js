@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alloy-calc-v4';
+const CACHE_NAME = 'alloy-calc-v7';
 const ASSETS = [
     './',
     './index.html',
