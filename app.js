@@ -94,6 +94,232 @@
   const adjCopperLabel = $('adj-copper-label');
   const adjCopperSublabel = $('adj-copper-sublabel');
 
+  // ─── BRACELET DATA (from kathu.xlsx) ──────────
+  const BRACELET_DATA = {
+    "Super Nice 8": [
+      { size: "1/10", w: 12 }, { size: "1/12", w: 13 }, { size: "1/14", w: 14 }, { size: "0/2", w: 15 },
+      { size: "2/2", w: 16 }, { size: "2/4", w: 17 }, { size: "2/6", w: 18 }, { size: "2/8", w: 19 },
+      { size: "2/10", w: 20 }, { size: "2/12", w: 21 }, { size: "2/14", w: 22 }, { size: "0/3", w: 23 }
+    ],
+    "Super Nice 10": [
+      { size: "1/10", w: 14 }, { size: "1/12", w: 15 }, { size: "1/14", w: 16 }, { size: "0/2", w: 17 },
+      { size: "2/2", w: 18 }, { size: "2/4", w: 19 }, { size: "2/6", w: 20 }, { size: "2/8", w: 21 },
+      { size: "2/10", w: 22 }, { size: "2/12", w: 23 }, { size: "2/14", w: 24 }, { size: "0/3", w: 25 }
+    ],
+    "Nice 11": [
+      { size: "1/10", w: 15 }, { size: "1/12", w: 16 }, { size: "1/14", w: 17 }, { size: "0/2", w: 18 },
+      { size: "2/2", w: 19 }, { size: "2/4", w: 20 }, { size: "2/6", w: 21 }, { size: "2/8", w: 22 },
+      { size: "2/10", w: 23 }, { size: "2/12", w: 24 }, { size: "2/14", w: 25 }, { size: "0/3", w: 26 }
+    ],
+    "Regular Nice 13": [
+      { size: "1/10", w: 18 }, { size: "1/12", w: 20 }, { size: "1/14", w: 21 }, { size: "0/2", w: 22 },
+      { size: "2/2", w: 24 }, { size: "2/4", w: 25 }, { size: "2/6", w: 27 }, { size: "2/8", w: 28 },
+      { size: "2/10", w: 30 }, { size: "2/12", w: 31 }, { size: "2/14", w: 32 }, { size: "0/3", w: 34 }
+    ],
+    "Regular 22": [
+      { size: "1/10", w: 23 }, { size: "1/12", w: 25 }, { size: "1/14", w: 27 }, { size: "0/2", w: 29 },
+      { size: "2/2", w: 31 }, { size: "2/4", w: 33 }, { size: "2/6", w: 35 }, { size: "2/8", w: 37 },
+      { size: "2/10", w: 39 }, { size: "2/12", w: 41 }, { size: "2/14", w: 43 }, { size: "0/3", w: 45 }
+    ],
+    "Regular 25": [
+      { size: "1/10", w: 25 }, { size: "1/12", w: 27 }, { size: "1/14", w: 29 }, { size: "0/2", w: 31 },
+      { size: "2/2", w: 33 }, { size: "2/4", w: 35 }, { size: "2/6", w: 37 }, { size: "2/8", w: 39 },
+      { size: "2/10", w: 41 }, { size: "2/12", w: 43 }, { size: "2/14", w: 45 }, { size: "0/3", w: 47 }
+    ],
+    "Regular 28": [
+      { size: "1/10", w: 28 }, { size: "1/12", w: 30 }, { size: "1/14", w: 32 }, { size: "0/2", w: 35 },
+      { size: "2/2", w: 37 }, { size: "2/4", w: 39 }, { size: "2/6", w: 41 }, { size: "2/8", w: 43 },
+      { size: "2/10", w: 45 }, { size: "2/12", w: 47 }, { size: "2/14", w: 49 }, { size: "0/3", w: 51 }
+    ],
+    "Regular Chol": [
+      { size: "1/10", w: 27 }, { size: "1/12", w: 29 }, { size: "1/14", w: 31 }, { size: "0/2", w: 33 },
+      { size: "2/2", w: 35 }, { size: "2/4", w: 37 }, { size: "2/6", w: 39 }, { size: "2/8", w: 41 },
+      { size: "2/10", w: 43 }, { size: "2/12", w: 45 }, { size: "2/14", w: 47 }, { size: "0/3", w: 49 }
+    ],
+    "50 Gram": [
+      { size: "2/4", w: 62 }, { size: "2/6", w: 66 }, { size: "2/8", w: 70 }, { size: "2/10", w: 74 },
+      { size: "2/12", w: 78 }, { size: "2/14", w: 82 }, { size: "0/3", w: 86 }
+    ],
+    "65 Gram": [
+      { size: "2/4", w: 72 }, { size: "2/6", w: 76 }, { size: "2/8", w: 80 }, { size: "2/10", w: 84 },
+      { size: "2/12", w: 88 }, { size: "2/14", w: 92 }, { size: "0/3", w: 96 }
+    ],
+    "80 Gram": [
+      { size: "2/6", w: 100 }, { size: "2/8", w: 105 }, { size: "2/10", w: 110 }, { size: "2/12", w: 115 },
+      { size: "2/14", w: 120 }, { size: "0/3", w: 125 }
+    ],
+    "100 Gram": [
+      { size: "2/6", w: 119 }, { size: "2/8", w: 126 }, { size: "2/10", w: 132 }, { size: "2/12", w: 138 },
+      { size: "2/14", w: 144 }, { size: "0/3", w: 150 }
+    ],
+    "Lock Nice": [
+      { size: "2/4", w: 41 }, { size: "2/6", w: 43 }, { size: "2/8", w: 45 }, { size: "2/10", w: 47 }
+    ],
+    "Lock Regular": [
+      { size: "2/4", w: 54 }, { size: "2/6", w: 57 }, { size: "2/8", w: 61 }, { size: "2/10", w: 64 }
+    ],
+    "3D 28": [
+      { size: "2/2", w: 34 }, { size: "2/4", w: 36 }, { size: "2/6", w: 38 }, { size: "2/8", w: 40 },
+      { size: "2/10", w: 42 }, { size: "2/12", w: 44 }, { size: "2/14", w: 46 }, { size: "0/3", w: 48 }
+    ]
+  };
+
+  // ─── BRACELET ORDER LOGIC ─────────────────────
+  const braceletSelect = $('bracelet-type-select');
+  const btnAddType = $('btn-add-type');
+  const braceletTablesContainer = $('bracelet-tables-container');
+  const braceletSummary = $('bracelet-summary');
+  const braceletTotalQty = $('bracelet-total-qty');
+  const braceletTotalWeight = $('bracelet-total-weight');
+  const btnFillWeight = $('btn-fill-weight');
+
+  // Track selected types
+  let selectedBraceletTypes = [];
+
+  // Populate the select dropdown
+  Object.keys(BRACELET_DATA).forEach(type => {
+    const opt = document.createElement('option');
+    opt.value = type;
+    opt.textContent = type;
+    braceletSelect.appendChild(opt);
+  });
+
+  // Add type button handler
+  btnAddType.addEventListener('click', () => {
+    const type = braceletSelect.value;
+    if (!type) return;
+    if (selectedBraceletTypes.includes(type)) return; // already added
+
+    selectedBraceletTypes.push(type);
+    renderBraceletType(type);
+    updateBraceletSummary();
+
+    // Reset select
+    braceletSelect.value = '';
+  });
+
+  function renderBraceletType(type) {
+    const sizes = BRACELET_DATA[type];
+    if (!sizes) return;
+
+    const card = document.createElement('div');
+    card.className = 'bracelet-type-card';
+    card.dataset.type = type;
+
+    let tableRows = '';
+    sizes.forEach((s, i) => {
+      tableRows += `
+        <tr>
+          <td><span class="bracelet-size-label">${s.size}</span></td>
+          <td><span class="bracelet-weight-label">${s.w} g</span></td>
+          <td style="text-align:center;">
+            <input type="number" class="bracelet-qty-input" data-type="${type}" data-index="${i}" 
+              data-weight="${s.w}" placeholder="0" min="0" step="1">
+            <span class="bracelet-row-subtotal" data-row-sub="${type}-${i}"></span>
+          </td>
+        </tr>`;
+    });
+
+    card.innerHTML = `
+      <div class="bracelet-type-header">
+        <span class="bracelet-type-name">${type}</span>
+        <button type="button" class="btn-remove-type" data-type="${type}" title="Remove ${type}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <table class="bracelet-size-table">
+        <thead><tr><th>Size</th><th>Weight</th><th>Qty</th></tr></thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+      <div class="bracelet-type-footer">
+        <span class="bracelet-type-footer-label">Subtotal</span>
+        <span class="bracelet-type-footer-value" data-footer="${type}">0 pcs · 0 g</span>
+      </div>`;
+
+    braceletTablesContainer.appendChild(card);
+
+    // Remove button handler
+    card.querySelector('.btn-remove-type').addEventListener('click', () => {
+      selectedBraceletTypes = selectedBraceletTypes.filter(t => t !== type);
+      card.remove();
+      updateBraceletSummary();
+    });
+
+    // Quantity input handlers
+    card.querySelectorAll('.bracelet-qty-input').forEach(input => {
+      input.addEventListener('input', () => {
+        const qty = parseInt(input.value) || 0;
+        const weight = parseFloat(input.dataset.weight);
+        const subEl = card.querySelector(`[data-row-sub="${input.dataset.type}-${input.dataset.index}"]`);
+        if (subEl) {
+          subEl.textContent = qty > 0 ? `= ${(qty * weight)} g` : '';
+        }
+        updateTypeFooter(type, card);
+        updateBraceletSummary();
+      });
+    });
+  }
+
+  function updateTypeFooter(type, card) {
+    let totalQty = 0, totalWeight = 0;
+    card.querySelectorAll('.bracelet-qty-input').forEach(input => {
+      const qty = parseInt(input.value) || 0;
+      const weight = parseFloat(input.dataset.weight);
+      totalQty += qty;
+      totalWeight += qty * weight;
+    });
+    const footer = card.querySelector(`[data-footer="${type}"]`);
+    if (footer) {
+      footer.textContent = `${totalQty} pcs · ${totalWeight} g`;
+    }
+  }
+
+  function updateBraceletSummary() {
+    let grandQty = 0, grandWeight = 0;
+    braceletTablesContainer.querySelectorAll('.bracelet-qty-input').forEach(input => {
+      const qty = parseInt(input.value) || 0;
+      const weight = parseFloat(input.dataset.weight);
+      grandQty += qty;
+      grandWeight += qty * weight;
+    });
+
+    if (selectedBraceletTypes.length > 0) {
+      braceletSummary.style.display = 'block';
+      braceletTotalQty.textContent = `${grandQty} pcs`;
+      braceletTotalWeight.textContent = `${grandWeight} g`;
+    } else {
+      braceletSummary.style.display = 'none';
+    }
+  }
+
+  // Fill weight into Order Details
+  btnFillWeight.addEventListener('click', () => {
+    let grandWeight = 0;
+    braceletTablesContainer.querySelectorAll('.bracelet-qty-input').forEach(input => {
+      const qty = parseInt(input.value) || 0;
+      const weight = parseFloat(input.dataset.weight);
+      grandWeight += qty * weight;
+    });
+
+    if (grandWeight <= 0) return;
+
+    // Convert to current unit if needed
+    if (currentUnit === 'kg') {
+      totalWeightIn.value = (grandWeight / 1000).toFixed(4).replace(/\.?0+$/, '');
+    } else {
+      totalWeightIn.value = grandWeight.toFixed(2).replace(/\.?0+$/, '');
+    }
+
+    // Smooth scroll to Order Details
+    totalWeightIn.closest('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Brief highlight effect
+    totalWeightIn.style.borderColor = 'var(--accent-light)';
+    setTimeout(() => { totalWeightIn.style.borderColor = ''; }, 1500);
+  });
+
   // ─── UNIT TOGGLE STATE ─────────────────────────
   let currentUnit = 'g';
   const unitToggle = $('unit-toggle');

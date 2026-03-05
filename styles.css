@@ -1328,6 +1328,296 @@ input[type="number"] {
 }
 
 /* ============================================
+   BRACELET ORDER
+   ============================================ */
+.bracelet-order-card {
+  border-color: var(--accent);
+}
+
+.bracelet-type-selector {
+  display: flex;
+  gap: 8px;
+}
+
+.bracelet-select {
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239a9ab0' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  transition: border-color 0.2s var(--ease);
+}
+
+.bracelet-select:focus {
+  border-color: var(--silver-dim);
+}
+
+.btn-add-type {
+  padding: 10px 16px;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: white;
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  transition: all 0.25s var(--ease);
+}
+
+.btn-add-type:hover {
+  background: var(--accent-light);
+  transform: translateY(-1px);
+}
+
+.btn-add-type:active {
+  transform: translateY(0);
+}
+
+/* Bracelet Type Card */
+.bracelet-type-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  margin-top: 12px;
+  overflow: hidden;
+  animation: fadeIn 0.3s var(--ease);
+}
+
+.bracelet-type-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(74, 111, 165, 0.1);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.bracelet-type-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent-light);
+}
+
+.btn-remove-type {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(192, 83, 79, 0.3);
+  background: transparent;
+  color: var(--danger);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s var(--ease);
+  flex-shrink: 0;
+}
+
+.btn-remove-type:hover {
+  background: rgba(192, 83, 79, 0.15);
+  border-color: var(--danger);
+}
+
+/* Size/Qty Table */
+.bracelet-size-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bracelet-size-table th {
+  padding: 8px 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.bracelet-size-table th:last-child {
+  text-align: center;
+  width: 80px;
+}
+
+.bracelet-size-table td {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(42, 42, 74, 0.3);
+}
+
+.bracelet-size-table tr:last-child td {
+  border-bottom: none;
+}
+
+.bracelet-size-label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.bracelet-weight-label {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.bracelet-qty-input {
+  width: 60px;
+  padding: 6px 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s var(--ease);
+}
+
+.bracelet-qty-input:focus {
+  border-color: var(--accent-light);
+}
+
+.bracelet-qty-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* Row subtotal when qty > 0 */
+.bracelet-row-subtotal {
+  font-size: 0.75rem;
+  color: var(--silver-color);
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+/* Order Summary */
+.bracelet-summary {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: rgba(74, 111, 165, 0.08);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  animation: fadeIn 0.3s var(--ease);
+}
+
+.bracelet-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.bracelet-summary-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.bracelet-summary-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.bracelet-weight-highlight {
+  color: var(--accent-light);
+  font-size: 1.1rem;
+}
+
+.btn-fill-weight {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  border: none;
+  border-radius: var(--radius-sm);
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s var(--ease);
+}
+
+.btn-fill-weight:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(74, 111, 165, 0.3);
+}
+
+.btn-fill-weight:active {
+  transform: translateY(0);
+}
+
+/* Bracelet type card subtotal footer */
+.bracelet-type-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(74, 111, 165, 0.06);
+  border-top: 1px solid var(--border-color);
+  font-size: 0.78rem;
+}
+
+.bracelet-type-footer-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.bracelet-type-footer-value {
+  color: var(--accent-light);
+  font-weight: 700;
+}
+
+/* Light mode overrides for bracelet section */
+[data-theme="light"] .bracelet-select {
+  background-color: #f5f5fa;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235a5a72' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+[data-theme="light"] .bracelet-type-header {
+  background: rgba(58, 95, 149, 0.08);
+}
+
+[data-theme="light"] .bracelet-qty-input {
+  background: #f5f5fa;
+}
+
+[data-theme="light"] .bracelet-summary {
+  background: rgba(58, 95, 149, 0.06);
+}
+
+[data-theme="light"] .bracelet-size-table td {
+  border-bottom-color: rgba(208, 208, 220, 0.5);
+}
+
+[data-theme="light"] .bracelet-type-footer {
+  background: rgba(58, 95, 149, 0.04);
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 400px) {

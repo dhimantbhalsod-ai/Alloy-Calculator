@@ -91,6 +91,57 @@
     <!-- Calculator View -->
     <main class="view active" id="view-calculator">
       <form id="calc-form" autocomplete="off">
+
+        <!-- Bracelet Order Section -->
+        <section class="card bracelet-order-card">
+          <h2 class="card-title">
+            <span class="dot dot-gold"></span>
+            Bracelet Order
+          </h2>
+          <span class="field-hint" style="margin-bottom:12px;">Select bracelet type(s) and enter quantity per size.
+            Total weight will auto-fill below.</span>
+
+          <!-- Type Selector -->
+          <div class="field">
+            <label>Add Bracelet Type</label>
+            <div class="bracelet-type-selector">
+              <select id="bracelet-type-select" class="bracelet-select">
+                <option value="">— Choose type —</option>
+              </select>
+              <button type="button" class="btn-add-type" id="btn-add-type">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Add
+              </button>
+            </div>
+          </div>
+
+          <!-- Selected Types & Size Tables Container -->
+          <div id="bracelet-tables-container"></div>
+
+          <!-- Order Summary -->
+          <div class="bracelet-summary" id="bracelet-summary" style="display:none;">
+            <div class="bracelet-summary-row">
+              <span class="bracelet-summary-label">Total Bracelets</span>
+              <span class="bracelet-summary-value" id="bracelet-total-qty">0 pcs</span>
+            </div>
+            <div class="bracelet-summary-row">
+              <span class="bracelet-summary-label">Total Alloy Weight</span>
+              <span class="bracelet-summary-value bracelet-weight-highlight" id="bracelet-total-weight">0 g</span>
+            </div>
+            <button type="button" class="btn-fill-weight" id="btn-fill-weight">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+              Use This Weight for Alloy Calculation
+            </button>
+          </div>
+        </section>
+
         <!-- Order Details -->
         <section class="card">
           <h2 class="card-title">
